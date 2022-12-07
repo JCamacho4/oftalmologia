@@ -1,26 +1,42 @@
 import { AppDataSource } from "./data-source"
-import { Sede } from "./entity/Sede"
+import { tClient } from "./entity/tClient"
+import { tEye } from "./entity/tEye"
 
 AppDataSource.initialize().then(async () => {
-/*
-    console.log("Inserting a new user into the database...")
-    const user = new User()
-    user.firstName = "Timber"
-    user.lastName = "Saw"
-    user.age = 25
-    await AppDataSource.manager.save(user)
-    console.log("Saved a new user with id: " + user.id)
 
-    console.log("Loading users from the database...")
-    const users = await AppDataSource.manager.find(User)
-    console.log("Loaded users: ", users)
+		const clientRepository = AppDataSource.getRepository(tClient)
+		const revisionRepository = AppDataSource.getRepository(tEye)
 
-    console.log("Here you can setup and run express / fastify / any other framework.")
-*/
+		console.log("Vamos a probar cositas")
+		const client = new tClient()
+		client.NIF = "12345678A"
+		client.NOMBRE = "Jorge"
+		client.APELLIDOS = "Camacho el mas lindo"
+		client.EDAD = 3
+		await clientRepository.save(client)
 
-    console.log("Mostrando todas las sedes para ver si funciona")
-    const sedes = await AppDataSource.manager.find(Sede)
-    console.log("Loaded users: ", sedes)
+		const clients = await clientRepository.find()
+		console.log("Cargando todos los clientes de la base de datos:\n", clients)
 
+		const revision = new tEye()
+		revision.CLIENT = client
+		revision.CONSULTA = "mi cama bb"
+		revision.OD_ADICION = 1
+		revision.OD_AGUDEZA = 1
+		revision.OD_CILINDRO = 1
+		revision.OD_ESFERA = 1
+		revision.OI_ADICION = 1
+		revision.OI_AGUDEZA = 1
+		revision.OI_CILINDRO = 1
+		revision.OI_ESFERA = 1
+		await revisionRepository.save(revision)
+		console.log("Revision ", revision, " almacenada en la base de datos")
+
+		const clients2 = await clientRepository.find({
+			relations: {
+				REVISIONES: true
+			}
+		})
+		console.log("Cargando todos los clientes de la base de datos con sus relaciones:\n", clients2)
 
 }).catch(error => console.log(error))

@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<persistence>
+  <persistence-unit name="openjpa">
+    <provider>org.apache.openjpa.persistence.PersistenceProviderImpl</provider>
+    <!--<class>infoevau.AULA</class>-->
+    <class>model.Sede</class>
+    <properties>
+      <property name="openjpa.ConnectionURL" value="database-pevau.cobadwnzalab.eu-central-1.rds.amazonaws.com"/>
+      <property name="openjpa.ConnectionDriverName" value="com.mysql.jdbc.Driver"/>
+      <property name="openjpa.ConnectionUserName" value="grupo16"/>
+      <property name="openjpa.ConnectionPassword" value="gLeyR5vXhrRUjqmX"/>
+      <property name="openjpa.Log" value="DefaultLevel=WARN, Tool=INFO"/>
+    </properties>
+  </persistence-unit>
+</persistence>

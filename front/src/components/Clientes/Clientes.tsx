@@ -19,7 +19,7 @@ function Clientes() {
 	const [clientes, setClientes] = useState<Client[]>([])
 	
 	useEffect(() => {
-    axios.get("http://localhost:3001/clientes").then((clientes) => {
+    axios.get("http://localhost:3001/lClientes").then((clientes) => {
       setClientes(clientes.data);
     });
   }, []);

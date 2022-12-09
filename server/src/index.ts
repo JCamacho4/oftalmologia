@@ -2,10 +2,12 @@ import { AppDataSource } from "./data-source"
 import { tClient } from "./entity/tClient"
 import { tEye } from "./entity/tEye"
 
+// constantes necesarias
 const express = require("express");
-require("dotenv").config();
 const app = express();
 const cors = require('cors');
+
+// despliegue del servidor
 app.use(express.json());
 app.use(cors());
 app.listen(3001, () => {
@@ -22,7 +24,7 @@ const revisionRepository = AppDataSource.getRepository(tEye);
 
 app.get("/lClientes", async (req, res) => {
 	let r = await clientRepository.find();
-	res.send(r);
+	res.send(await clientRepository.find());
 });
 
 app.post("/lRevisiones", async (req, res) => {
@@ -39,66 +41,39 @@ app.post("/lRevisiones", async (req, res) => {
 	  ========================================================*/
 
 app.post("/insCliente", async (req, res) => {
-	try {
-		const client = new tClient();
-		client.NIF = req.body.NIF;
-		client.NOMBRE = req.body.NOMBRE;
-		client.APELLIDOS = req.body.APELLIDOS;
-		client.EDAD = Number(req.body.EDAD);
-		await clientRepository.save(client)
-		res.send(client);	// si la inserción es correcta devuelvo el cliente.
-	} catch (err) {
-		res.status(500).send({ status: 'error', message: err.message });
-	}
+
+	let client = new tClient();
+	client.NIF = req.body.NIF;
+	client.NOMBRE = req.body.NOMBRE;
+	client.APELLIDOS = req.body.APELLIDOS;
+	client.EDAD = Number(req.body.EDAD);
+	await clientRepository.save(client).catch(error => res.send(error));	// si la inserción es correcta devuelvo el cliente.
+
 });
 
 app.post("/insCita", async (req, res) => {
-	try {
-		
-	} catch (err) {
-		res.status(500).send({ status: 'error', message: err.message });
-	}
+	let client = new tClient();
+	client.NIF = req.body.CLIENT.NIF;
+	client.NOMBRE = req.body.CLIENT.NOMBRE;
+	client.APELLIDOS = req.body.CLIENT.APELLIDOS;
+	client.EDAD = Number(req.body.CLIENT.EDAD);
+
+	const revision = new tEye();
+	revision.CLIENT = client;
+	revision.CONSULTA = req.body.CONSULTA;
+	revision.OD_ADICION = Number(req.body.OD_ADICION);
+	revision.OD_AGUDEZA = Number(req.body.OD_AGUDEZA);
+	revision.OD_CILINDRO = Number(req.body.OD_CILINDRO);
+	revision.OD_ESFERA = Number(req.body.OD_ESFERA);
+	revision.OI_ADICION = Number(req.body.OI_ADICION);
+	revision.OI_AGUDEZA = Number(req.body.OI_AGUDEZA);
+	revision.OI_CILINDRO = Number(req.body.OI_CILINDRO);
+	revision.OI_ESFERA = Number(req.body.OI_ESFERA);
+	await revisionRepository.save(revision).catch(error => res.send(error));
 });
 
 
 
-
-
-
-/*
 AppDataSource.initialize().then(async () => {
-
-	const clientRepository = AppDataSource.getRepository(tClient)
-	const revisionRepository = AppDataSource.getRepository(tEye)
-
-
-	const client2 = new tClient()
-	client2.NIF = "87654321Z"
-	client2.NOMBRE = "Pepe"
-	client2.APELLIDOS = "Fascista Americano"
-	client2.EDAD = 200
-	await clientRepository.save(client2)
-
-	const revision = new tEye()
-	revision.CLIENT = client
-	revision.CONSULTA = "Consulta del doctor pollagorda"
-	revision.OD_ADICION = 1
-	revision.OD_AGUDEZA = 1
-	revision.OD_CILINDRO = 1
-	revision.OD_ESFERA = 1
-	revision.OI_ADICION = 1
-	revision.OI_AGUDEZA = 1
-	revision.OI_CILINDRO = 1
-	revision.OI_ESFERA = 1
-	await revisionRepository.save(revision)
-	console.log("Revision ", revision, " almacenada en la base de datos")
-
-	const clients2 = await clientRepository.find({
-		relations: {
-			REVISIONES: true
-		}
-	})
-	console.log("Cargando todos los clientes de la base de datos con sus relaciones:\n", clients2)
-
-}).catch(error => console.log(error))
-*/
+	
+})

@@ -2,15 +2,14 @@ import "reflect-metadata"
 import { DataSource } from "typeorm"
 import { tClient } from "./entity/tClient"
 import { tEye } from "./entity/tEye"
-require("dotenv").config();
 
 export const AppDataSource = new DataSource({
     type: "mysql",
-    host: process.env.HOST,
-    port: Number(process.env.PORT),
-    username: process.env.DB_USER,
-    password: process.env.PASSWORD,
-    database: process.env.DATABASE,
+    host: "database-pevau.cobadwnzalab.eu-central-1.rds.amazonaws.com",
+    port: 3306,
+    username: "grupo16",
+    password: "gLeyR5vXhrRUjqmX",
+    database: "grupo16DB",
     synchronize: true,
     logging: false,
     entities: [tClient, tEye],

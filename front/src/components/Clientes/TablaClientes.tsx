@@ -1,8 +1,22 @@
 import React from 'react'
 import { Client, ListaClientes } from './Clientes'
+import { useState} from "react";
+import BotonesClientes from './BotonesClientes';
 
 function TablaClientes({clientes} : ListaClientes) {
+
+  const [NIF, setNIF] = useState("");
+	const [Nombre, setNombre] = useState("");
+	const [Apellidos, setApellidos] = useState("");
+
+  const cambiarClientes = (nif: string, nombre: string, apellidos: string) => {
+		setNIF(nif);
+		setNombre(nombre);
+		setApellidos(apellidos);
+	}
+
 	return (
+    <div>
 		<div className="containerTabla">
         <table className="tablaClientes">
           <thead>
@@ -16,14 +30,36 @@ function TablaClientes({clientes} : ListaClientes) {
           <tbody>
             {clientes.map((c, key) => (
               <tr key={key}>
-                <td>{c.NIF}</td>
-                <td>{c.NOMBRE}</td>
-                <td>{c.APELLIDOS}</td>
-                <td>{c.EDAD}</td>
+                <td
+                  onClick={
+                    () => cambiarClientes(c.NIF, c.NOMBRE, c.APELLIDOS)
+                  }
+                >{c.NIF}</td>
+                <td
+                  onClick={
+                    () => cambiarClientes(c.NIF, c.NOMBRE, c.APELLIDOS)
+                  }>{c.NOMBRE}</td>
+                <td
+                  onClick={
+                    () => cambiarClientes(c.NIF, c.NOMBRE, c.APELLIDOS)
+                  }
+                >{c.APELLIDOS}</td>
+                <td
+                  onClick={
+                    () => cambiarClientes(c.NIF, c.NOMBRE, c.APELLIDOS)
+                  }
+                >{c.EDAD}</td>
               </tr>
             ))}
           </tbody>
         </table>
+    </div>
+                  
+    <BotonesClientes nif={NIF} nombre={Nombre} apellidos={Apellidos}
+    setNIF = {setNIF}
+    setNombre = {setNombre}
+    setApellidos = {setApellidos}
+    />
     </div>
 	)
 }

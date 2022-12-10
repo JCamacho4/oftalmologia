@@ -8,8 +8,14 @@ function BotonesClientes(parametros) {
 			<form className="formulario">
 				<label>NIF</label>
 				<input type="text" onChange={ () => parametros.setNIF()} value={parametros.nif}></input>
+
+				<br/>
+
 				<label>Nombre</label>
 				<input type="text" onChange={ () => parametros.setNombre()} value={parametros.nombre}></input>
+
+				<br/>
+
 				<label>Apellidos</label>
 				<input type="text" onChange={ () => parametros.setApellidos()} value={parametros.apellidos}></input>
 			</form>

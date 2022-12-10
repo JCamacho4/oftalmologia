@@ -1,36 +1,43 @@
-
 .containerTabla {
-    height: 440px;
-    overflow-y: auto;
-    width: 70%;
-    position: absolute;
-    right: 15px;
-    top:10%;
+  height: 50%;
+  overflow-y: auto;
+  width: 100%;
+  position: absolute;
+  right: 15px;
+  top: 10%;
+  text-align: left;
+}
+
+.tablaClientes {
+  width:80%x;
+  margin:0 auto;  
 }
 
 .formulario {
-    position: absolute;
-    left: 20%;
-    top: 30%;
+  text-align: left;
+  position: absolute;
+  left: 20%;
+  top: 65%;
 }
 
 .containerTabla::-webkit-scrollbar {
-    -webkit-appearance: none;
+  -webkit-appearance: none;
 }
-  
+
 .containerTabla::-webkit-scrollbar:vertical {
-    width: 10px;
+  width: 10px;
 }
-  
+
 .containerTabla::-webkit-scrollbar-thumb {
-    background-color: #797979;
-    border-radius: 20px;
-    border: 2px solid #f1f2f3;
+  background-color: #797979;
+  border-radius: 20px;
+  border: 2px solid #f1f2f3;
 }
 
 .tablaClientes tr:nth-child(odd) {
   background-color: white;
 }
+
 .tablaClientes tr:nth-child(even) {
   background-color: #f2f2f2;
 }
@@ -40,21 +47,23 @@
 }
 
 .tablaClientes th {
-    position: sticky;
-    top: 0;
-    padding-top: 12px;
-    padding-bottom: 12px;
-    text-align: center;
-    background-color: lightblue;
-    color: black;
-  }
+  position: sticky;
+  top: 0;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: center;
+  background-color: lightblue;
+  color: black;
+}
 
-input[type=text], select, textarea {
-    width: 40%;
-    padding: 7px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-    margin: 10px;
-    resize: vertical;
+input[type=text],
+select,
+textarea {
+  width: 60%;
+  padding: 7px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin: 10px;
+  resize: vertical;
 }

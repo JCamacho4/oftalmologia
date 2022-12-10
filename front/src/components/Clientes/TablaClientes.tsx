@@ -1,23 +1,23 @@
 import React from 'react'
 import { Client, ListaClientes } from './Clientes'
-import { useState} from "react";
+import { useState } from "react";
 import BotonesClientes from './BotonesClientes';
 
-function TablaClientes({clientes} : ListaClientes) {
+function TablaClientes({ clientes }: ListaClientes) {
 
   const [NIF, setNIF] = useState("");
-	const [Nombre, setNombre] = useState("");
-	const [Apellidos, setApellidos] = useState("");
+  const [Nombre, setNombre] = useState("");
+  const [Apellidos, setApellidos] = useState("");
 
   const cambiarClientes = (nif: string, nombre: string, apellidos: string) => {
-		setNIF(nif);
-		setNombre(nombre);
-		setApellidos(apellidos);
-	}
+    setNIF(nif);
+    setNombre(nombre);
+    setApellidos(apellidos);
+  }
 
-	return (
+  return (
     <div>
-		<div className="containerTabla">
+      <div className="containerTabla">
         <table className="tablaClientes">
           <thead>
             <tr>
@@ -53,15 +53,17 @@ function TablaClientes({clientes} : ListaClientes) {
             ))}
           </tbody>
         </table>
+      </div>
+
+
+      <div>
+        <BotonesClientes nif={NIF} nombre={Nombre} apellidos={Apellidos}
+          setNIF={setNIF}
+          setNombre={setNombre}
+          setApellidos={setApellidos} />
+      </div>
     </div>
-                  
-    <BotonesClientes nif={NIF} nombre={Nombre} apellidos={Apellidos}
-    setNIF = {setNIF}
-    setNombre = {setNombre}
-    setApellidos = {setApellidos}
-    />
-    </div>
-	)
+  )
 }
 
 export default TablaClientes

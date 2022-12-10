@@ -27,6 +27,7 @@ function Clientes() {
 
 	return (
 		<div>
+			<h1>Revisión Ocular</h1>
 			<TablaClientes clientes={clientes}/>
 		</div>
 	)

@@ -3,7 +3,7 @@ import { Client, ListaClientes } from "./Clientes";
 import { useState } from "react";
 import BotonesClientes from "./BotonesClientes";
 
-function TablaClientes({ clientes }: ListaClientes) {
+function TablaClientes({ clientes }: ListaClientes, clienteSeleccionado: Client, setClienteSeleccionado: Function) {
   const [NIF, setNIF] = useState("");
   const [Nombre, setNombre] = useState("");
   const [Apellidos, setApellidos] = useState("");

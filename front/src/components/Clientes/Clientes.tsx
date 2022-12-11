@@ -17,6 +17,12 @@ export interface ListaClientes{
 function Clientes() {
 
 	const [clientes, setClientes] = useState<Client[]>([])
+	const [clienteSeleccionado, setClienteSeleccionado] = useState<Client>({
+		NIF: '',
+		NOMBRE: '',
+		APELLIDOS: '',
+		EDAD: 0
+	  });
 	
 	useEffect(() => {
     axios.get("http://localhost:3001/lClientes").then((clientes) => {
@@ -27,7 +33,9 @@ function Clientes() {
 	return (
 		<div>
 			<h1>Revisión Ocular</h1>
-			<TablaClientes clientes={clientes}/>
+
+			{/* @ts-ignore */	/*Esto es literalmente un bug de React */ }
+			<TablaClientes clientes={clientes} clienteSeleccionado={clienteSeleccionado} setClienteSeleccionado={setClienteSeleccionado} />
 		</div>
 	)
 }

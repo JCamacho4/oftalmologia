@@ -1,19 +1,20 @@
-import React from 'react'
-import { Client, ListaClientes } from './Clientes'
+import React from "react";
+import { Client, ListaClientes } from "./Clientes";
 import { useState } from "react";
-import BotonesClientes from './BotonesClientes';
+import BotonesClientes from "./BotonesClientes";
 
 function TablaClientes({ clientes }: ListaClientes) {
-
   const [NIF, setNIF] = useState("");
   const [Nombre, setNombre] = useState("");
   const [Apellidos, setApellidos] = useState("");
+  const [Edad, setEdad] = useState(0);
 
-  const cambiarClientes = (nif: string, nombre: string, apellidos: string) => {
+  const cambiarClientes = (nif: string, nombre: string, apellidos: string, edad:number) => {
     setNIF(nif);
     setNombre(nombre);
     setApellidos(apellidos);
-  }
+    setEdad(edad);
+  };
 
   return (
     <div>
@@ -29,41 +30,34 @@ function TablaClientes({ clientes }: ListaClientes) {
           </thead>
           <tbody>
             {clientes.map((c, key) => (
-              <tr key={key}>
-                <td
-                  onClick={
-                    () => cambiarClientes(c.NIF, c.NOMBRE, c.APELLIDOS)
-                  }
-                >{c.NIF}</td>
-                <td
-                  onClick={
-                    () => cambiarClientes(c.NIF, c.NOMBRE, c.APELLIDOS)
-                  }>{c.NOMBRE}</td>
-                <td
-                  onClick={
-                    () => cambiarClientes(c.NIF, c.NOMBRE, c.APELLIDOS)
-                  }
-                >{c.APELLIDOS}</td>
-                <td
-                  onClick={
-                    () => cambiarClientes(c.NIF, c.NOMBRE, c.APELLIDOS)
-                  }
-                >{c.EDAD}</td>
+              <tr
+                key={key}
+                onClick={() => cambiarClientes(c.NIF, c.NOMBRE, c.APELLIDOS, c.EDAD)}
+              >
+                <td>{c.NIF}</td>
+                <td>{c.NOMBRE}</td>
+                <td>{c.APELLIDOS}</td>
+                <td>{c.EDAD}</td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
 
-
       <div>
-        <BotonesClientes nif={NIF} nombre={Nombre} apellidos={Apellidos}
-          setNIF={setNIF}
-          setNombre={setNombre}
-          setApellidos={setApellidos} />
-      </div>
+      <BotonesClientes
+        nif={NIF}
+        nombre={Nombre}
+        apellidos={Apellidos}
+        edad={Edad}
+        setNIF={setNIF}
+        setNombre={setNombre}
+        setApellidos={setApellidos}
+        setEdad={setEdad}
+      />
     </div>
-  )
+    </div>
+  );
 }
 
-export default TablaClientes
+export default TablaClientes;

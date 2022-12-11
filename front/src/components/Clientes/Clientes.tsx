@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import axios from "axios"
 import TablaClientes from './TablaClientes';
-import BotonesClientes from './BotonesClientes';
 import "../../assets/css/Clientes.css"
 
 export interface Client{

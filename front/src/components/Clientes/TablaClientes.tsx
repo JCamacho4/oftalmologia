@@ -37,6 +37,7 @@ function TablaClientes({clientes,clienteSeleccionado, setClienteSeleccionado}:pr
                 onClick={() => {
                   cambiarVaribales(c.NIF, c.NOMBRE, c.APELLIDOS, c.EDAD)
                   setClienteSeleccionado({...c})}}
+								style={clienteSeleccionado.NIF === c.NIF ? {backgroundColor: "#9bded3"} : {}}
               >
                 <td>{c.NIF}</td>
                 <td>{c.NOMBRE}</td>

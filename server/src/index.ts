@@ -40,7 +40,7 @@ app.post("/lRevisiones", async (req, res) => {
 	Inserciones
 	  ========================================================*/
 
-app.post("/insCliente", async (req, res) => {
+app.post("/insertCliente", async (req, res) => {
 
 	let client = new tClient();
 	client.NIF = req.body.NIF;
@@ -51,7 +51,7 @@ app.post("/insCliente", async (req, res) => {
 
 });
 
-app.post("/insCita", async (req, res) => {
+app.post("/insertCita", async (req, res) => {
 	let client = new tClient();
 	client.NIF = req.body.CLIENT.NIF;
 	client.NOMBRE = req.body.CLIENT.NOMBRE;
@@ -72,7 +72,21 @@ app.post("/insCita", async (req, res) => {
 	await revisionRepository.save(revision).catch(error => res.send(error));
 });
 
+app.post("/deleteCliente", async (req, res) => {
+	let NIF = req.body.NIF;
+	let c = await clientRepository.findOneBy({NIF: NIF});
 
+	await clientRepository.remove(c);
+});
+
+app.post("/updateCliente", async(req, res) => {
+	let client = new tClient();
+	client.NIF = req.body.NIF;
+	client.NOMBRE = req.body.NOMBRE;
+	client.APELLIDOS = req.body.APELLIDOS;
+	client.EDAD = Number(req.body.EDAD);
+	await clientRepository.save(client).catch(error => res.send(error));
+});
 
 AppDataSource.initialize().then(async () => {
 	

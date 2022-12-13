@@ -9,8 +9,8 @@ export const cambiarVaribales = (n, no, ap, ed) => {
   edad = ed;
 }
 
-export function BotonesClientes(
-  {clienteSeleccionado, setClienteSeleccionado}:propsBotones) {
+export function BotonesClientes({clienteSeleccionado, setClienteSeleccionado}:propsBotones) {
+
   const ages: number[] = [];
   for (let i = 0; i < 120; i++) {
     ages.push(i);
@@ -32,9 +32,13 @@ export function BotonesClientes(
           <input
             type="text"
             onChange={(event) => {
-              nif = event.target.value;
+              const nuevoSeleccionado: Client = {
+                ...clienteSeleccionado,
+                NIF: event.target.value,
+              };
+              setClienteSeleccionado(nuevoSeleccionado);
             }}
-            value={nif}
+            value={clienteSeleccionado.NIF}
           ></input>
 
           <br />
@@ -43,9 +47,13 @@ export function BotonesClientes(
           <input
             type="text"
             onChange={(event) => {
-              nombre = event.target.value;
+              const nuevoSeleccionado: Client = {
+                ...clienteSeleccionado,
+                NOMBRE: event.target.value,
+              };
+              setClienteSeleccionado(nuevoSeleccionado);
             }}
-            value={nombre}
+            value={clienteSeleccionado.NOMBRE}
           ></input>
 
           <br />
@@ -54,9 +62,13 @@ export function BotonesClientes(
           <input
             type="text"
             onChange={(event) => {
-              apellidos = event.target.value;
+              const nuevoSeleccionado: Client = {
+                ...clienteSeleccionado,
+                APELLIDOS: event.target.value,
+              };
+              setClienteSeleccionado(nuevoSeleccionado);
             }}
-            value={apellidos}
+            value={clienteSeleccionado.APELLIDOS}
           ></input>
 
           <br />
@@ -64,20 +76,24 @@ export function BotonesClientes(
           <label>Edad</label>
           <select
             onChange={(event) => {
-              edad = event.target.value;
+              const nuevoSeleccionado: Client = {
+                ...clienteSeleccionado,
+                EDAD: Number.parseInt(event.target.value),
+              };
+              setClienteSeleccionado(nuevoSeleccionado);
             }}
-            value={edad}
+            value={clienteSeleccionado.EDAD}
           >
             {ages.map((age, i) => {
              if(age === clienteSeleccionado.EDAD){
 				return (
-					<option selected value={age} key={i}>
+					<option selected defaultValue={age} key={i}>
 					 {age}
 				   </option>
 				);
 			 } else{
 				 return (
-				   <option value={age} key={i}>
+				   <option defaultValue={age} key={i}>
 					 {age}
 				   </option>
 				 );

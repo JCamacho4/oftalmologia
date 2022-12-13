@@ -82,10 +82,10 @@ export function BotonesClientes({
   };
 
   return (
-    <div className="containerClientes">
-      <div className="buttonContainer">
-        <form className="formulario">
-          <label>NIF</label>
+    <>
+      <div className="containerLabels">
+        <form>
+        <label>NIF</label>
           <input
             type="text"
             onChange={(event) => {
@@ -158,6 +158,8 @@ export function BotonesClientes({
             })}
           </select>
         </form>
+      </div>
+      <div className="containerBotones">
           <button
           className="buttonClientes"
           onClick={() => abrirRevisiones(clienteSeleccionado)}
@@ -177,8 +179,7 @@ export function BotonesClientes({
           >Modificar Cliente</button>
 
       </div>
-      <div></div>
-    </div>
+    </>
   );
 }
 

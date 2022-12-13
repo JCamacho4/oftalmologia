@@ -3,8 +3,9 @@ import {propsTabla } from "./Clientes";
 function TablaClientes({clientes,clienteSeleccionado, setClienteSeleccionado}:propsTabla) {
 
   return (
-    <div>
-      <div className="containerTabla">
+    <>
+    <div className="tableContainer">
+      <div>
         <table className="tablaClientes">
           <thead>
             <tr>
@@ -31,10 +32,8 @@ function TablaClientes({clientes,clienteSeleccionado, setClienteSeleccionado}:pr
           </tbody>
         </table>
       </div>
-
-      <div>
-    </div>
-    </div>
+      </div>
+    </>
   );
 }
 

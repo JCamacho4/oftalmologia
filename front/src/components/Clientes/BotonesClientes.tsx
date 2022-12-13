@@ -22,6 +22,10 @@ export function BotonesClientes({
 
   const insertCliente = (cliente: Client) => {
     if (cliente.NIF.length > 0) {
+      if(clienteSeleccionado.NIF === cliente.NIF){
+        alert("Ya hay un cliente con el mismo DNI");
+        return;
+      }
       axios.post("http://localhost:3001/insertCliente", {
         NIF: cliente.NIF,
         NOMBRE: cliente.NOMBRE,

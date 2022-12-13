@@ -1,0 +1,76 @@
+h1{
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .containerTabla {
+    height: 300px;
+    width: 80%;
+    overflow-y: auto;
+    width: 100%;
+    text-align: left;
+  }
+  
+  .tablaRevisiones {
+    width:80%;
+    margin:0 auto;  
+  }
+  
+  .formulario {
+    text-align: left;
+    position: absolute;
+    left: 20%;
+    top: 65%;
+  }
+  
+  .containerTabla::-webkit-scrollbar {
+    -webkit-appearance: none;
+  }
+  
+  .containerTabla::-webkit-scrollbar:vertical {
+    width: 10px;
+  }
+  
+  .containerTabla::-webkit-scrollbar-thumb {
+    background-color: #797979;
+    border-radius: 20px;
+    border: 2px solid #f1f2f3;
+  }
+  
+  .tablaRevisiones tr:nth-child(odd) {
+    background-color: white;
+  }
+  
+  .tablaRevisiones tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  .tablaRevisiones tr:hover {
+    background-color: #ddd;
+  }
+  
+  .tablaRevisiones th {
+    position: sticky;
+    top: 0;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center;
+    background-color: lightblue;
+    color: black;
+  }
+  
+  input[type=text],
+  select,
+  textarea {
+    width: 60%;
+    padding: 7px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin: 10px;
+    resize: vertical;
+  }
+  
+  .containerRevisiones{
+    display: flex;
+  }

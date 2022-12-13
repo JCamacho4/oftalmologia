@@ -13,6 +13,14 @@ function BotonesClientes({
     ages.push(i);
   }
 
+  const abrirRevisiones = (nif) => {
+    if(nif.length > 0 ){
+      window.location.href = nif;
+    }else{
+      console.log("Selecciona una revision cazurro");
+    }
+  }
+
   return (
     <div className="containerClientes">
       <div className="buttonContainer">
@@ -68,6 +76,10 @@ function BotonesClientes({
             })}
           </select>
         </form>
+          <button
+            onClick={() => abrirRevisiones(nif)}
+          >Mostrar Revisiones</button>
+
       </div>
       <div></div>
     </div>

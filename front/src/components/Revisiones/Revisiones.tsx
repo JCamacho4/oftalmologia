@@ -5,7 +5,7 @@ import TablaRevisiones from './TablaRevisiones'
 import { useParams } from "react-router-dom";
 import "../../assets/css/Revisiones.css"
 
-export interface Revisiones{
+export interface Revision{
 	ID: string;
 	CONSULTA: string;
 	OD_ESFERA: number;
@@ -19,16 +19,26 @@ export interface Revisiones{
 	cLIENTNIF:string;
 }
 
-export interface ListaRevisiones{
-	revisiones: Revisiones[]
+export interface propsTabla{
+	revisiones: Revision[];
+	revisionSeleccionada: Revision;
+	setRevisionSeleccionada: Function
+}
+
+export interface propsBotones{
+	revisiones: Revision[];
+	setRevisiones: Function;
+	revisionSeleccionada: Revision;
+	setRevisionSeleccionada: Function;
+	client_nif
 }
 
 function Revisiones() {
 	let params = useParams();
-	let client_id = params.cliente;
+	let client_nif = params.cliente;
 
-	const [revisiones, setRevisiones] = useState<Revisiones[]>([])
-	const [revisionSeleccionada, setRevisionSeleccionada] = useState<Revisiones>({
+	const [revisiones, setRevisiones] = useState<Revision[]>([])
+	const [revisionSeleccionada, setRevisionSeleccionada] = useState<Revision>({
 		ID: "",
 		CONSULTA: "",
 		OD_ESFERA: -1,
@@ -44,20 +54,19 @@ function Revisiones() {
 
 	  useEffect(() => {
 		axios.post("http://localhost:3001/lRevisiones", {
-			NIF: client_id
+			NIF: client_nif
 		}).then((revisiones) => {
 		  setRevisiones(revisiones.data);
 		});
 	  }, []);
 
-	  {console.log(revisiones)}
 	return (
 		<div>
-			<h1>Revisiones de DNI {client_id}</h1>
+			<h1>Revisiones de DNI {client_nif}</h1>
 
-			<TablaRevisiones revisiones={revisiones}/>
+			<TablaRevisiones revisiones={revisiones} revisionSeleccionada={revisionSeleccionada} setRevisionSeleccionada={setRevisionSeleccionada} />
 			
-			<BotonesRevisiones />
+			<BotonesRevisiones revisiones={revisiones} setRevisiones={setRevisiones} revisionSeleccionada={revisionSeleccionada} setRevisionSeleccionada={setRevisionSeleccionada} client_nif={client_nif}/>
 		</div>
 	)
 }

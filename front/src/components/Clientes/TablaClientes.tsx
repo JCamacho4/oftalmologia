@@ -1,7 +1,7 @@
 import React from "react";
 import { Client, propsTabla } from "./Clientes";
 import { useState } from "react";
-import BotonesClientes from "./BotonesClientes";
+import { cambiarVaribales } from "./BotonesClientes";
 
 function TablaClientes({clientes,clienteSeleccionado, setClienteSeleccionado}:propsTabla) {
 
@@ -17,8 +17,6 @@ function TablaClientes({clientes,clienteSeleccionado, setClienteSeleccionado}:pr
     setApellidos(apellidos);
     setEdad(edad);
   };
-
-  {console.log(clienteSeleccionado)}
 
   return (
     <div>
@@ -36,7 +34,9 @@ function TablaClientes({clientes,clienteSeleccionado, setClienteSeleccionado}:pr
             {clientes.map((c, key) => (
               <tr
                 key={key}
-                onClick={() => setClienteSeleccionado({...c})}
+                onClick={() => {
+                  cambiarVaribales(c.NIF, c.NOMBRE, c.APELLIDOS, c.EDAD)
+                  setClienteSeleccionado({...c})}}
               >
                 <td>{c.NIF}</td>
                 <td>{c.NOMBRE}</td>

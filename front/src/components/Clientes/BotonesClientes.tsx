@@ -8,7 +8,7 @@ export function BotonesClientes({clienteSeleccionado, setClienteSeleccionado}:pr
     ages.push(i);
   }
 
-  const abrirRevisiones = (nif) => {
+  const abrirRevisiones = (nif:string) => {
     if(nif.length > 0 ){
       window.location.href = nif;
     }else{
@@ -32,7 +32,7 @@ export function BotonesClientes({clienteSeleccionado, setClienteSeleccionado}:pr
     }
   }
 
-  const deleteCliente = (cliente) => {
+  const deleteCliente = (cliente:Client) => {
     if(cliente){
       axios.post("http://localhost:3001/deleteCliente", {
         NIF: cliente.NIF,
@@ -44,8 +44,8 @@ export function BotonesClientes({clienteSeleccionado, setClienteSeleccionado}:pr
     }
   }
 
-  const modificarCliente = (cliente) => {
-    if(cliente){
+  const modificarCliente = (cliente:Client) => {
+    if(cliente.NIF.length > 0){
       axios.post("http://localhost:3001/updateCliente", {
         NIF: cliente.NIF,
         NOMBRE: cliente.NOMBRE,
@@ -139,16 +139,20 @@ export function BotonesClientes({clienteSeleccionado, setClienteSeleccionado}:pr
           </select>
         </form>
           <button
+          className="buttonClientes"
           onClick={() => abrirRevisiones(clienteSeleccionado.NIF)}
           >Mostrar Revisiones</button>
 
-          <button
-            onClick={() => insertCliente(clienteSeleccionado)}
+          <button 
+          className="buttonClientes"
+          onClick={() => insertCliente(clienteSeleccionado)}
           >Insertar Cliente</button>
-          <button
+          <button 
+          className="buttonClientes"
           onClick={() => deleteCliente(clienteSeleccionado)}
           >Eliminar Cliente</button>
           <button
+          className="buttonClientes"
           onClick={() => modificarCliente(clienteSeleccionado)}
           >Modificar Cliente</button>
 

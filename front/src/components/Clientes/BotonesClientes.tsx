@@ -1,17 +1,12 @@
-function BotonesClientes({
-  nif,
-  setNIF,
-  nombre,
-  setNombre,
-  apellidos,
-  setApellidos,
-  edad,
-  setEdad,
-}) {
+import { Client, propsBotones } from "./Clientes";
+
+function BotonesClientes(
+  {clienteSeleccionado, setClienteSeleccionado}:propsBotones) {
   const ages: number[] = [];
   for (let i = 0; i < 120; i++) {
     ages.push(i);
   }
+
 
   const abrirRevisiones = (nif) => {
     if(nif.length > 0 ){
@@ -21,6 +16,8 @@ function BotonesClientes({
     }
   }
 
+  let nif, nombre, apellidos, edad;
+
   return (
     <div className="containerClientes">
       <div className="buttonContainer">
@@ -28,7 +25,10 @@ function BotonesClientes({
           <label>NIF</label>
           <input
             type="text"
-            onChange={(event) => setNIF(event.target.value)}
+            onChange={(event) => {
+              clienteSeleccionado.NIF = event.target.value;
+              setClienteSeleccionado(clienteSeleccionado)}
+          }
             value={nif}
           ></input>
 
@@ -37,8 +37,11 @@ function BotonesClientes({
           <label>Nombre</label>
           <input
             type="text"
-            onChange={(event) => setNombre(event.target.value)}
-            value={nombre}
+            onChange={(event) => {
+              clienteSeleccionado.NOMBRE = event.target.value;
+              setClienteSeleccionado(clienteSeleccionado)}
+          }
+            value={clienteSeleccionado.NOMBRE}
           ></input>
 
           <br />
@@ -46,19 +49,25 @@ function BotonesClientes({
           <label>Apellidos</label>
           <input
             type="text"
-            onChange={(event) => setApellidos(event.target.value)}
-            value={apellidos}
+            onChange={(event) => {
+              clienteSeleccionado.APELLIDOS = event.target.value;
+              setClienteSeleccionado(clienteSeleccionado)}
+          }
+            value={clienteSeleccionado.APELLIDOS}
           ></input>
 
           <br />
 
           <label>Edad</label>
           <select
-            onChange={(event) => setEdad(event.target.value)}
-            value={edad}
+            onChange={(event) => {
+              clienteSeleccionado.EDAD = Number.parseInt(event.target.value);
+              setClienteSeleccionado(clienteSeleccionado)}
+          }
+            value={clienteSeleccionado.EDAD}
           >
             {ages.map((age, i) => {
-             if(age === edad){
+             if(age === clienteSeleccionado.EDAD){
 				return (
 					<option selected value={age} key={i}>
 					 {age}
@@ -77,7 +86,6 @@ function BotonesClientes({
           </select>
         </form>
           <button
-            onClick={() => abrirRevisiones(nif)}
           >Mostrar Revisiones</button>
 
       </div>

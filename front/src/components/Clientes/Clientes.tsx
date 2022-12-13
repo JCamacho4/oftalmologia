@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import axios from "axios"
 import TablaClientes from './TablaClientes';
 import "../../assets/css/Clientes.css"
+import BotonesClientes from './BotonesClientes';
 
 export interface Client{
 	NIF: string;
@@ -10,8 +11,15 @@ export interface Client{
 	EDAD: number;
 }
 
-export interface ListaClientes{
-	clientes: Client[]
+export interface propsTabla{
+	clientes: Client[];
+	clienteSeleccionado: Client;
+	setClienteSeleccionado: Function
+}
+
+export interface propsBotones{
+	clienteSeleccionado: Client;
+	setClienteSeleccionado: Function
 }
 
 function Clientes() {
@@ -36,6 +44,8 @@ function Clientes() {
 
 			{/* @ts-ignore */	/*Esto es literalmente un bug de React */ }
 			<TablaClientes clientes={clientes} clienteSeleccionado={clienteSeleccionado} setClienteSeleccionado={setClienteSeleccionado} />
+
+			<BotonesClientes clienteSeleccionado={clienteSeleccionado} setClienteSeleccionado={setClienteSeleccionado} />
 		</div>
 	)
 }

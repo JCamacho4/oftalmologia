@@ -1,9 +1,11 @@
 import React from "react";
-import { Client, ListaClientes } from "./Clientes";
+import { Client, propsTabla } from "./Clientes";
 import { useState } from "react";
 import BotonesClientes from "./BotonesClientes";
 
-function TablaClientes({ clientes }: ListaClientes, clienteSeleccionado: Client, setClienteSeleccionado: Function) {
+function TablaClientes({clientes,clienteSeleccionado, setClienteSeleccionado}:propsTabla) {
+
+
   const [NIF, setNIF] = useState("");
   const [Nombre, setNombre] = useState("");
   const [Apellidos, setApellidos] = useState("");
@@ -15,6 +17,8 @@ function TablaClientes({ clientes }: ListaClientes, clienteSeleccionado: Client,
     setApellidos(apellidos);
     setEdad(edad);
   };
+
+  {console.log(clienteSeleccionado)}
 
   return (
     <div>
@@ -32,7 +36,7 @@ function TablaClientes({ clientes }: ListaClientes, clienteSeleccionado: Client,
             {clientes.map((c, key) => (
               <tr
                 key={key}
-                onClick={() => cambiarClientes(c.NIF, c.NOMBRE, c.APELLIDOS, c.EDAD)}
+                onClick={() => setClienteSeleccionado({...c})}
               >
                 <td>{c.NIF}</td>
                 <td>{c.NOMBRE}</td>
@@ -45,16 +49,6 @@ function TablaClientes({ clientes }: ListaClientes, clienteSeleccionado: Client,
       </div>
 
       <div>
-      <BotonesClientes
-        nif={NIF}
-        nombre={Nombre}
-        apellidos={Apellidos}
-        edad={Edad}
-        setNIF={setNIF}
-        setNombre={setNombre}
-        setApellidos={setApellidos}
-        setEdad={setEdad}
-      />
     </div>
     </div>
   );

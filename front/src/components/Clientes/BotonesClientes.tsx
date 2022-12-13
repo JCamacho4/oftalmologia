@@ -21,7 +21,7 @@ export function BotonesClientes({
   };
 
   const insertCliente = (cliente: Client) => {
-    if (cliente) {
+    if (cliente.NIF.length > 0) {
       axios.post("http://localhost:3001/insertCliente", {
         NIF: cliente.NIF,
         NOMBRE: cliente.NOMBRE,
@@ -37,7 +37,7 @@ export function BotonesClientes({
   };
 
   const deleteCliente = (cliente:Client) => {
-    if(cliente){
+    if(cliente.NIF.length > 0){
       axios.post("http://localhost:3001/deleteCliente", {
         NIF: cliente.NIF,
       });

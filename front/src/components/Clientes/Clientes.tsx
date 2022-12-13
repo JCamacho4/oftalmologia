@@ -18,6 +18,8 @@ export interface propsTabla{
 }
 
 export interface propsBotones{
+	clientes: Client[];
+	setClientes: Function;
 	clienteSeleccionado: Client;
 	setClienteSeleccionado: Function
 }
@@ -45,7 +47,7 @@ function Clientes() {
 			{/* @ts-ignore */	/*Esto es literalmente un bug de React */ }
 			<TablaClientes clientes={clientes} clienteSeleccionado={clienteSeleccionado} setClienteSeleccionado={setClienteSeleccionado} />
 
-			<BotonesClientes clienteSeleccionado={clienteSeleccionado} setClienteSeleccionado={setClienteSeleccionado} />
+			<BotonesClientes clientes={clientes} setClientes={setClientes} clienteSeleccionado={clienteSeleccionado} setClienteSeleccionado={setClienteSeleccionado} />
 		</div>
 	)
 }

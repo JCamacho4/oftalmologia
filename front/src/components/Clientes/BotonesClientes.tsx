@@ -1,63 +1,81 @@
 import axios from "axios";
 import { Client, propsBotones } from "./Clientes";
 
-export function BotonesClientes({clienteSeleccionado, setClienteSeleccionado}:propsBotones) {
-
+export function BotonesClientes({
+  clientes,
+  setClientes,
+  clienteSeleccionado,
+  setClienteSeleccionado,
+}: propsBotones) {
   const ages: number[] = [];
   for (let i = 0; i < 120; i++) {
     ages.push(i);
   }
 
   const abrirRevisiones = (nif) => {
-    if(nif.length > 0 ){
+    if (nif.length > 0) {
       window.location.href = nif;
-    }else{
+    } else {
       alert("Selecciona un cliente cazurro");
     }
-  }
+  };
 
-  const insertCliente = (cliente:Client) => {
-    if(cliente){
+  const insertCliente = (cliente: Client) => {
+    if (cliente) {
       axios.post("http://localhost:3001/insertCliente", {
         NIF: cliente.NIF,
         NOMBRE: cliente.NOMBRE,
         APELLIDOS: cliente.APELLIDOS,
-        EDAD: cliente.EDAD
-      })
-      alert("Cliente insertado con éxito");
-      window.location.reload();
+        EDAD: cliente.EDAD,
+      });
+      setClientes(clientes.concat(cliente));
+      setClienteSeleccionado({ NIF: "", NOMBRE: "", APELLIDOS: "", EDAD: 0 });
 
-    }else{
+    } else {
       alert("Selecciona un cliente pedazo de marica");
     }
-  }
+  };
 
-  const deleteCliente = (cliente) => {
-    if(cliente){
+  const deleteCliente = (cliente: Client) => {
+    if (cliente) {
       axios.post("http://localhost:3001/deleteCliente", {
         NIF: cliente.NIF,
-      })
-      alert("Cliente eliminado con éxito");
-      window.location.reload();
-    }else{
+      });
+      setClientes(clientes.filter((c) => c.NIF !== cliente.NIF));
+      setClienteSeleccionado({ NIF: "", NOMBRE: "", APELLIDOS: "", EDAD: 0 });
+
+    } else {
       alert("Selecciona un cliente pedazo de gay");
     }
-  }
+  };
 
-  const modificarCliente = (cliente) => {
-    if(cliente){
+  const modificarCliente = (cliente: Client) => {
+    if (cliente) {
       axios.post("http://localhost:3001/updateCliente", {
         NIF: cliente.NIF,
         NOMBRE: cliente.NOMBRE,
         APELLIDOS: cliente.APELLIDOS,
-        EDAD: cliente.EDAD
-      })
-      alert("Cliente modificado con éxito");
-      window.location.reload();
-    }else{
+        EDAD: cliente.EDAD,
+      });
+      setClientes(
+        clientes.map((c) => {
+          if (c.NIF === cliente.NIF) {
+            return {
+              NIF: cliente.NIF,
+              NOMBRE: cliente.NOMBRE,
+              APELLIDOS: cliente.APELLIDOS,
+              EDAD: cliente.EDAD,
+            };
+          }
+          return c;
+        })
+      );
+
+      setClienteSeleccionado({ NIF: "", NOMBRE: "", APELLIDOS: "", EDAD: 0 });
+    } else {
       alert("Selecciona un cliente pedazo de estúpido");
     }
-  }
+  };
 
   return (
     <div className="containerClientes">
@@ -120,38 +138,35 @@ export function BotonesClientes({clienteSeleccionado, setClienteSeleccionado}:pr
             value={clienteSeleccionado.EDAD}
           >
             {ages.map((age, i) => {
-             if(age === clienteSeleccionado.EDAD){
-				return (
-					<option selected defaultValue={age} key={i}>
-					 {age}
-				   </option>
-				);
-			 } else{
-				 return (
-				   <option defaultValue={age} key={i}>
-					 {age}
-				   </option>
-				 );
-
-			 }
-			 
+              if (age === clienteSeleccionado.EDAD) {
+                return (
+                  <option selected defaultValue={age} key={i}>
+                    {age}
+                  </option>
+                );
+              } else {
+                return (
+                  <option defaultValue={age} key={i}>
+                    {age}
+                  </option>
+                );
+              }
             })}
           </select>
         </form>
-          <button
-          onClick={() => abrirRevisiones(clienteSeleccionado.NIF)}
-          >Mostrar Revisiones</button>
+        <button onClick={() => abrirRevisiones(clienteSeleccionado.NIF)}>
+          Mostrar Revisiones
+        </button>
 
-          <button
-            onClick={() => insertCliente(clienteSeleccionado)}
-          >Insertar Cliente</button>
-          <button
-          onClick={() => deleteCliente(clienteSeleccionado)}
-          >Eliminar Cliente</button>
-          <button
-          onClick={() => modificarCliente(clienteSeleccionado)}
-          >Modificar Cliente</button>
-
+        <button onClick={() => insertCliente(clienteSeleccionado)}>
+          Insertar Cliente
+        </button>
+        <button onClick={() => deleteCliente(clienteSeleccionado)}>
+          Eliminar Cliente
+        </button>
+        <button onClick={() => modificarCliente(clienteSeleccionado)}>
+          Modificar Cliente
+        </button>
       </div>
       <div></div>
     </div>

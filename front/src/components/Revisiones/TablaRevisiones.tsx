@@ -17,7 +17,6 @@ function TablaRevisiones({ revisiones }) {
 				<th>OI_CILINDRO</th>
 				<th>OI_ADICION</th>
 				<th>OI_AGUDEZA</th>
-				<th>cLIENTNIF</th>
 			  </tr>
 			</thead>
 			<tbody>
@@ -36,7 +35,6 @@ function TablaRevisiones({ revisiones }) {
 				  <td>{r.OI_CILINDRO}</td>
 				  <td>{r.OI_ADICION}</td>
 				  <td>{r.OI_AGUDEZA}</td>
-				  <td>{r.cLIENTNIF}</td>
 				</tr>
 			  ))}
 			</tbody>

@@ -12,9 +12,9 @@ export function BotonesClientes({
     ages.push(i);
   }
 
-  const abrirRevisiones = (nif:string) => {
-    if(nif.length > 0 ){
-      window.location.href = nif;
+  const abrirRevisiones = (client:Client) => {
+    if(client.NIF.length > 0 ){
+      window.location.href = client.NIF;
     } else {
       alert("Selecciona un cliente cazurro");
     }
@@ -160,7 +160,7 @@ export function BotonesClientes({
         </form>
           <button
           className="buttonClientes"
-          onClick={() => abrirRevisiones(clienteSeleccionado.NIF)}
+          onClick={() => abrirRevisiones(clienteSeleccionado)}
           >Mostrar Revisiones</button>
 
           <button 

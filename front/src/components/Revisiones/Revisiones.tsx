@@ -25,7 +25,7 @@ export interface ListaRevisiones{
 
 function Revisiones() {
 	let params = useParams();
-	let nif = params.nif;
+	let client_id = params.cliente;
 
 	const [revisiones, setRevisiones] = useState<Revisiones[]>([])
 	const [revisionSeleccionada, setRevisionSeleccionada] = useState<Revisiones>({
@@ -42,16 +42,18 @@ function Revisiones() {
 		cLIENTNIF:""
 	  });
 
-	//   useEffect(() => {
-	// 	axios.get("http://localhost:3001/lRevisiones").then((revisiones) => {
-	// 	  setRevisiones(revisiones.data);
-	// 	});
-	//   }, []);
+	  useEffect(() => {
+		axios.post("http://localhost:3001/lRevisiones", {
+			NIF: client_id
+		}).then((revisiones) => {
+		  setRevisiones(revisiones.data);
+		});
+	  }, []);
 
-
+	  {console.log(revisiones)}
 	return (
 		<div>
-			<h1>Revisiones</h1>
+			<h1>Revisiones de DNI {client_id}</h1>
 
 			<TablaRevisiones revisiones={revisiones}/>
 			

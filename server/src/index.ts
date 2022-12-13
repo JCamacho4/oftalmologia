@@ -28,9 +28,10 @@ app.get("/lClientes", async (req, res) => {
 });
 
 app.post("/lRevisiones", async (req, res) => {
-	let clientNIF = req.body.CLIENT;
+	let NIF = req.body.NIF;
+	let c = await clientRepository.findOneBy({NIF: NIF});
 	let r = await revisionRepository.findBy({
-		CLIENT: clientNIF,
+		CLIENT: c
 	})
 	res.send(r);
 });

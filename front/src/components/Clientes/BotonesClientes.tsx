@@ -1,13 +1,5 @@
+import axios from "axios";
 import { Client, propsBotones } from "./Clientes";
-
-let nif, nombre, apellidos, edad;
-
-export const cambiarVaribales = (n, no, ap, ed) => {
-  nif = n;
-  nombre = no;
-  apellidos = ap;
-  edad = ed;
-}
 
 export function BotonesClientes({clienteSeleccionado, setClienteSeleccionado}:propsBotones) {
 
@@ -20,7 +12,50 @@ export function BotonesClientes({clienteSeleccionado, setClienteSeleccionado}:pr
     if(nif.length > 0 ){
       window.location.href = nif;
     }else{
-      console.log("Selecciona una revision cazurro");
+      alert("Selecciona un cliente cazurro");
+    }
+  }
+
+  const insertCliente = (cliente:Client) => {
+    if(cliente){
+      axios.post("http://localhost/3001/insertCliente", {
+        NIF: cliente.NIF,
+        NOMBRE: cliente.NOMBRE,
+        APELLIDOS: cliente.APELLIDOS,
+        EDAD: cliente.EDAD
+      })
+      alert("Cliente insertado con éxito");
+      window.location.reload();
+
+    }else{
+      alert("Selecciona un cliente pedazo de marica");
+    }
+  }
+
+  const deleteCliente = (cliente) => {
+    if(cliente){
+      axios.post("http://localhost/3001/deleteCliente", {
+        NIF: cliente.NIF,
+      })
+      alert("Cliente eliminado con éxito");
+      window.location.reload();
+    }else{
+      alert("Selecciona un cliente pedazo de gay");
+    }
+  }
+
+  const modificarCliente = (cliente) => {
+    if(cliente){
+      axios.post("http://localhost/3001/updateCliente", {
+        NIF: cliente.NIF,
+        NOMBRE: cliente.NOMBRE,
+        APELLIDOS: cliente.APELLIDOS,
+        EDAD: cliente.EDAD
+      })
+      alert("Cliente modificado con éxito");
+      window.location.reload();
+    }else{
+      alert("Selecciona un cliente pedazo de estúpido");
     }
   }
 
@@ -104,7 +139,18 @@ export function BotonesClientes({clienteSeleccionado, setClienteSeleccionado}:pr
           </select>
         </form>
           <button
+          onClick={() => abrirRevisiones(clienteSeleccionado.NIF)}
           >Mostrar Revisiones</button>
+
+          <button
+            onClick={() => insertCliente(clienteSeleccionado)}
+          >Insertar Cliente</button>
+          <button
+          onClick={() => deleteCliente(clienteSeleccionado)}
+          >Eliminar Cliente</button>
+          <button
+          onClick={() => modificarCliente(clienteSeleccionado)}
+          >Modificar Cliente</button>
 
       </div>
       <div></div>

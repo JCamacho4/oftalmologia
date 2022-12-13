@@ -1,22 +1,6 @@
-import React from "react";
-import { Client, propsTabla } from "./Clientes";
-import { useState } from "react";
-import { cambiarVaribales } from "./BotonesClientes";
+import {propsTabla } from "./Clientes";
 
 function TablaClientes({clientes,clienteSeleccionado, setClienteSeleccionado}:propsTabla) {
-
-
-  const [NIF, setNIF] = useState("");
-  const [Nombre, setNombre] = useState("");
-  const [Apellidos, setApellidos] = useState("");
-  const [Edad, setEdad] = useState(0);
-
-  const cambiarClientes = (nif: string, nombre: string, apellidos: string, edad:number) => {
-    setNIF(nif);
-    setNombre(nombre);
-    setApellidos(apellidos);
-    setEdad(edad);
-  };
 
   return (
     <div>
@@ -36,6 +20,7 @@ function TablaClientes({clientes,clienteSeleccionado, setClienteSeleccionado}:pr
                 key={key}
                 onClick={() => {
                   setClienteSeleccionado({...c})}}
+                  style={clienteSeleccionado.NIF === c.NIF ? {backgroundColor: "#9bded3"} : {}}
               >
                 <td>{c.NIF}</td>
                 <td>{c.NOMBRE}</td>

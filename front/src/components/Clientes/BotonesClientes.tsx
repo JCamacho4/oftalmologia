@@ -18,7 +18,7 @@ export function BotonesClientes({clienteSeleccionado, setClienteSeleccionado}:pr
 
   const insertCliente = (cliente:Client) => {
     if(cliente){
-      axios.post("http://localhost/3001/insertCliente", {
+      axios.post("http://localhost:3001/insertCliente", {
         NIF: cliente.NIF,
         NOMBRE: cliente.NOMBRE,
         APELLIDOS: cliente.APELLIDOS,
@@ -34,7 +34,7 @@ export function BotonesClientes({clienteSeleccionado, setClienteSeleccionado}:pr
 
   const deleteCliente = (cliente) => {
     if(cliente){
-      axios.post("http://localhost/3001/deleteCliente", {
+      axios.post("http://localhost:3001/deleteCliente", {
         NIF: cliente.NIF,
       })
       alert("Cliente eliminado con éxito");
@@ -46,7 +46,7 @@ export function BotonesClientes({clienteSeleccionado, setClienteSeleccionado}:pr
 
   const modificarCliente = (cliente) => {
     if(cliente){
-      axios.post("http://localhost/3001/updateCliente", {
+      axios.post("http://localhost:3001/updateCliente", {
         NIF: cliente.NIF,
         NOMBRE: cliente.NOMBRE,
         APELLIDOS: cliente.APELLIDOS,

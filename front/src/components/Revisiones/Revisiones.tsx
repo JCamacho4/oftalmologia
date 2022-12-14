@@ -7,7 +7,7 @@ import "../../assets/css/Revisiones.css"
 
 export interface Revision{
 	ID: string;
-	CONSULTA: string;
+	CONSULTA: Date;
 	OD_ESFERA: number;
 	OD_CILINDRO: number;
 	OD_ADICION:number;
@@ -40,7 +40,7 @@ function Revisiones() {
 	const [revisiones, setRevisiones] = useState<Revision[]>([])
 	const [revisionSeleccionada, setRevisionSeleccionada] = useState<Revision>({
 		ID: "",
-		CONSULTA: "",
+		CONSULTA: new Date(),
 		OD_ESFERA: -1,
 		OD_CILINDRO: -1,
 		OD_ADICION: -1,
@@ -57,6 +57,7 @@ function Revisiones() {
 			NIF: client_nif
 		}).then((revisiones) => {
 		  setRevisiones(revisiones.data);
+			console.log(revisiones.data);
 		});
 	  }, []);
 

@@ -24,7 +24,7 @@ export function BotonesRevisiones({
 			  OI_AGUDEZA: revision.OI_AGUDEZA,
 			});
 			setRevisiones(revisiones.concat(revision));
-			setRevisionSeleccionada({ID: "",CONSULTA: "",OD_ESFERA: -1,OD_CILINDRO: -1,OD_ADICION: -1,OD_AGUDEZA: -1,OI_ESFERA: -1,
+			setRevisionSeleccionada({ID: "",CONSULTA: new Date(),OD_ESFERA: -1,OD_CILINDRO: -1,OD_ADICION: -1,OD_AGUDEZA: -1,OI_ESFERA: -1,
 			OI_CILINDRO: -1,OI_ADICION: -1,OI_AGUDEZA: -1,cLIENTNIF:""});
 	};
 
@@ -34,7 +34,7 @@ export function BotonesRevisiones({
 			  ID: revision.ID,
 			});
 			setRevisiones(revisiones.filter((c) => c.ID !== revision.ID));
-			setRevisionSeleccionada({ID: "",CONSULTA: "",OD_ESFERA: -1,OD_CILINDRO: -1,OD_ADICION: -1,OD_AGUDEZA: -1,OI_ESFERA: -1,
+			setRevisionSeleccionada({ID: "",CONSULTA: new Date(),OD_ESFERA: -1,OD_CILINDRO: -1,OD_ADICION: -1,OD_AGUDEZA: -1,OI_ESFERA: -1,
 			OI_CILINDRO: -1,OI_ADICION: -1,OI_AGUDEZA: -1,cLIENTNIF:""});
 	  
 		  } else {
@@ -78,7 +78,7 @@ export function BotonesRevisiones({
 			  })
 			);
 	  
-			setRevisionSeleccionada({ID: "",CONSULTA: "",OD_ESFERA: -1,OD_CILINDRO: -1,OD_ADICION: -1,OD_AGUDEZA: -1,OI_ESFERA: -1,
+			setRevisionSeleccionada({ID: "",CONSULTA: new Date(),OD_ESFERA: -1,OD_CILINDRO: -1,OD_ADICION: -1,OD_AGUDEZA: -1,OI_ESFERA: -1,
 			OI_CILINDRO: -1,OI_ADICION: -1,OI_AGUDEZA: -1,cLIENTNIF:""});
 		  } else {
 			alert("Selecciona un cliente pedazo de estúpido");
@@ -203,6 +203,14 @@ export function BotonesRevisiones({
 				setRevisionSeleccionada(nuevoSeleccionado);
 			  }}
 			  value={revisionSeleccionada.OI_AGUDEZA}
+			></input>
+
+			<br />
+
+			<label>CONSULTA</label>
+			<input 
+				type="date"
+				value={revisionSeleccionada.CONSULTA.toString()}
 			></input>
 
 		  </form>

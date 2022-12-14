@@ -7,8 +7,8 @@ export class tEye {
 	@PrimaryGeneratedColumn({ type: "int" })
 	ID: number
 
-	@Column({ length: 250 })
-	CONSULTA: string
+	@Column({type: "date"})
+	CONSULTA: Date
 
 	@Column({ type: "real" })
 	OD_ESFERA: number

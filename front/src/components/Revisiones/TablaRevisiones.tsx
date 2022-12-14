@@ -29,7 +29,7 @@ function TablaRevisiones({revisiones,revisionSeleccionada, setRevisionSelecciona
 					style={revisionSeleccionada.ID === r.ID ? {backgroundColor: "#9bded3"} : {}}
 				>
 				  <td>{r.ID}</td>
-				  <td>{r.CONSULTA}</td>
+				  <td>{r.CONSULTA.getMonth().toString() + "/" + r.CONSULTA.getDay + "/" + r.CONSULTA.getFullYear}</td>
 				  <td>{r.OD_ESFERA}</td>
 				  <td>{r.OD_CILINDRO}</td>
 				  <td>{r.OD_ADICION}</td>

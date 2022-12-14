@@ -85,6 +85,10 @@ app.post("/deleteCita", async (req, res) => {
 });
 
 app.post("/updateCliente", async(req, res) => {
+	let oldnif = req.body.ANTIGUONIF;
+	let c = await clientRepository.findOneBy({NIF: oldnif});
+	await clientRepository.remove(c);
+
 	let client = new tClient();
 	client.NIF = req.body.NIF;
 	client.NOMBRE = req.body.NOMBRE;

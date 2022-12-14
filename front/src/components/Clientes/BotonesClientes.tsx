@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useEffect, useRef } from "react";
 import { Client, propsBotones } from "./Clientes";
 
 export function BotonesClientes({
@@ -7,6 +8,29 @@ export function BotonesClientes({
   clienteSeleccionado,
   setClienteSeleccionado,
 }: propsBotones) {
+
+	useEffect(() => {
+		if(nif.current) nif.current.value = clienteSeleccionado.NIF;
+		if(nombre.current) nombre.current.value = clienteSeleccionado.NOMBRE;
+		if(apellidos.current) apellidos.current.value = clienteSeleccionado.APELLIDOS;
+		if(edad.current) edad.current.value = clienteSeleccionado.EDAD.toString();
+	}, [clienteSeleccionado]);
+
+	const nif = useRef<HTMLInputElement>(null);
+	const nombre = useRef<HTMLInputElement>(null);
+	const apellidos = useRef<HTMLInputElement>(null);
+	const edad = useRef<HTMLSelectElement>(null);
+
+	const sort = (a, b) => {
+		if (a.NIF < b.NIF) {
+			return -1;
+		}
+		if (a.NIF > b.NIF) {
+			return 1;
+		}
+		return 0;
+	}
+
   const ages: number[] = [];
   for (let i = 0; i < 120; i++) {
     ages.push(i);
@@ -22,7 +46,7 @@ export function BotonesClientes({
 
   const insertCliente = (cliente: Client) => {
     if (cliente.NIF.length > 0) {
-      if(clienteSeleccionado.NIF === cliente.NIF){
+      if(clientes.find((c) => c.NIF === cliente.NIF) !== undefined){
         alert("Ya hay un cliente con el mismo DNI");
         return;
       }
@@ -32,9 +56,8 @@ export function BotonesClientes({
         APELLIDOS: cliente.APELLIDOS,
         EDAD: cliente.EDAD,
       });
-      setClientes(clientes.concat(cliente));
+      setClientes(clientes.concat(cliente).sort((a,b) => sort(a,b)));
       setClienteSeleccionado({ NIF: "", NOMBRE: "", APELLIDOS: "", EDAD: 0 });
-
     } else {
       alert("Selecciona un cliente pedazo de marica");
     }
@@ -53,13 +76,14 @@ export function BotonesClientes({
     }
   };
 
-  const modificarCliente = (cliente:Client) => {
+  const modificarCliente = (cliente:Client, oldClient:Client) => {
     if(cliente.NIF.length > 0){
       axios.post("http://localhost:3001/updateCliente", {
         NIF: cliente.NIF,
         NOMBRE: cliente.NOMBRE,
         APELLIDOS: cliente.APELLIDOS,
         EDAD: cliente.EDAD,
+				ANTIGUONIF: oldClient.NIF
       });
       setClientes(
         clientes.map((c) => {
@@ -74,7 +98,7 @@ export function BotonesClientes({
           return c;
         })
       );
-
+			setClientes(clientes.filter(c => c.NIF !== oldClient.NIF).concat(cliente).sort((a,b) => sort(a,b)));
       setClienteSeleccionado({ NIF: "", NOMBRE: "", APELLIDOS: "", EDAD: 0 });
     } else {
       alert("Selecciona un cliente pedazo de estúpido");
@@ -88,14 +112,8 @@ export function BotonesClientes({
         <label>NIF</label>
           <input
             type="text"
-            onChange={(event) => {
-              const nuevoSeleccionado: Client = {
-                ...clienteSeleccionado,
-                NIF: event.target.value,
-              };
-              setClienteSeleccionado(nuevoSeleccionado);
-            }}
-            value={clienteSeleccionado.NIF}
+						ref={nif}
+            
           ></input>
 
           <br />
@@ -103,14 +121,7 @@ export function BotonesClientes({
           <label>Nombre</label>
           <input
             type="text"
-            onChange={(event) => {
-              const nuevoSeleccionado: Client = {
-                ...clienteSeleccionado,
-                NOMBRE: event.target.value,
-              };
-              setClienteSeleccionado(nuevoSeleccionado);
-            }}
-            value={clienteSeleccionado.NOMBRE}
+						ref={nombre}
           ></input>
 
           <br />
@@ -118,28 +129,14 @@ export function BotonesClientes({
           <label>Apellidos</label>
           <input
             type="text"
-            onChange={(event) => {
-              const nuevoSeleccionado: Client = {
-                ...clienteSeleccionado,
-                APELLIDOS: event.target.value,
-              };
-              setClienteSeleccionado(nuevoSeleccionado);
-            }}
-            value={clienteSeleccionado.APELLIDOS}
+						ref={apellidos}
           ></input>
 
           <br />
 
           <label>Edad</label>
           <select
-            onChange={(event) => {
-              const nuevoSeleccionado: Client = {
-                ...clienteSeleccionado,
-                EDAD: Number.parseInt(event.target.value),
-              };
-              setClienteSeleccionado(nuevoSeleccionado);
-            }}
-            value={clienteSeleccionado.EDAD}
+						ref={edad}
           >
             {ages.map((age, i) => {
               if (age === clienteSeleccionado.EDAD) {
@@ -167,7 +164,19 @@ export function BotonesClientes({
 
           <button 
           className="buttonClientes"
-          onClick={() => insertCliente(clienteSeleccionado)}
+          onClick={() => {
+						let c : Client = {
+							NIF: '',
+							NOMBRE: '',
+							APELLIDOS: '',
+							EDAD: 0
+						}
+						if(nif.current) c.NIF = nif.current.value;
+						if(nombre.current) c.NOMBRE = nombre.current.value;
+						if(apellidos.current) c.APELLIDOS = apellidos.current.value;
+						if(edad.current) c.EDAD = Number(edad.current.value);
+						insertCliente(c);
+					}}
           >Insertar Cliente</button>
           <button 
           className="buttonClientes"
@@ -175,7 +184,19 @@ export function BotonesClientes({
           >Eliminar Cliente</button>
           <button
           className="buttonClientes"
-          onClick={() => modificarCliente(clienteSeleccionado)}
+          onClick={() => {
+						let c : Client = {
+							NIF: '',
+							NOMBRE: '',
+							APELLIDOS: '',
+							EDAD: 0
+						}
+						if(nif.current) c.NIF = nif.current.value;
+						if(nombre.current) c.NOMBRE = nombre.current.value;
+						if(apellidos.current) c.APELLIDOS = apellidos.current.value;
+						if(edad.current) c.EDAD = Number(edad.current.value);
+						modificarCliente(c, clienteSeleccionado);
+					}}
           >Modificar Cliente</button>
 
       </div>

@@ -20,8 +20,9 @@ function TablaClientes({clientes,clienteSeleccionado, setClienteSeleccionado}:pr
               <tr
                 key={key}
                 onClick={() => {
-                  setClienteSeleccionado({...c})}}
-                  style={clienteSeleccionado.NIF === c.NIF ? {backgroundColor: "#9bded3"} : {}}
+                  setClienteSeleccionado({...c})}
+								}
+                style={clienteSeleccionado.NIF === c.NIF ? {backgroundColor: "#9bded3"} : {}}
               >
                 <td>{c.NIF}</td>
                 <td>{c.NOMBRE}</td>

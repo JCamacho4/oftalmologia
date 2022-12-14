@@ -2,6 +2,10 @@ import React from 'react'
 import { propsTabla } from './Revisiones'
 
 function TablaRevisiones({revisiones,revisionSeleccionada, setRevisionSeleccionada, cliente_nif}:propsTabla) {
+	const convertDate = (d:Date) => {
+		let x = d.toString().split('-');
+		return x[1] + "/" + x[2] + "/" + x[0];
+	}
 	return (
 		<div>
 		<div className="containerTabla">
@@ -31,7 +35,7 @@ function TablaRevisiones({revisiones,revisionSeleccionada, setRevisionSelecciona
 				>
 				  <td>{r.ID}</td>
 				  <td>{cliente_nif}</td>
-				  <td>{r.CONSULTA.getMonth().toString() + "/" + r.CONSULTA.getDay + "/" + r.CONSULTA.getFullYear}</td>
+				  <td>{convertDate(r.CONSULTA)}</td>
 				  <td>{r.OD_ESFERA}</td>
 				  <td>{r.OD_CILINDRO}</td>
 				  <td>{r.OD_ADICION}</td>

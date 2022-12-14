@@ -68,6 +68,8 @@ app.post("/insertCita", async (req, res) => {
 	revision.OI_CILINDRO = Number(req.body.OI_CILINDRO);
 	revision.OI_ESFERA = Number(req.body.OI_ESFERA);
 	await revisionRepository.save(revision).catch(error => res.send(error));
+
+	res.send();
 });
 
 app.post("/deleteCliente", async (req, res) => {
@@ -82,6 +84,8 @@ app.post("/deleteCita", async (req, res) => {
 	let r = await revisionRepository.findOneBy({ID: ID});
 
 	await revisionRepository.remove(r);
+
+	res.send();
 });
 
 app.post("/updateCliente", async(req, res) => {
@@ -119,6 +123,8 @@ app.post("/updateCita", async(req, res) => {
 	revision.OI_ESFERA = Number(req.body.OI_ESFERA);
 
 	await revisionRepository.save(revision).catch(error => res.send(error));
+
+	res.send();
 });
 
 AppDataSource.initialize().then(async () => {

@@ -198,6 +198,12 @@ export function BotonesClientes({
 						modificarCliente(c, clienteSeleccionado);
 					}}
           >Modificar Cliente</button>
+					<button
+					className="buttonClientes"
+					onClick={() => {
+						setClienteSeleccionado({ NIF: "", NOMBRE: "", APELLIDOS: "", EDAD: 0 });
+					}}
+					>Limpiar</button>
 
       </div>
     </>

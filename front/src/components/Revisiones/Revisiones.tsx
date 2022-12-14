@@ -42,14 +42,14 @@ function Revisiones() {
 	const [revisionSeleccionada, setRevisionSeleccionada] = useState<Revision>({
 		ID: "",
 		CONSULTA: new Date(),
-		OD_ESFERA: -1,
-		OD_CILINDRO: -1,
-		OD_ADICION: -1,
-		OD_AGUDEZA: -1,
-		OI_ESFERA: -1,
-		OI_CILINDRO: -1,
-		OI_ADICION: -1,
-		OI_AGUDEZA: -1,
+		OD_ESFERA: 0,
+		OD_CILINDRO: 0,
+		OD_ADICION: 0,
+		OD_AGUDEZA: 0,
+		OI_ESFERA: 0,
+		OI_CILINDRO: 0,
+		OI_ADICION: 0,
+		OI_AGUDEZA: 0,
 		cLIENTNIF:""
 	  });
 
@@ -58,9 +58,8 @@ function Revisiones() {
 			NIF: client_nif
 		}).then((revisiones) => {
 		  setRevisiones(revisiones.data);
-			console.log(revisiones.data);
 		});
-	  }, []);
+	  }, [revisionSeleccionada]);
 
 	return (
 		<div>

@@ -23,6 +23,7 @@ export interface propsTabla{
 	revisiones: Revision[];
 	revisionSeleccionada: Revision;
 	setRevisionSeleccionada: Function
+	cliente_nif
 }
 
 export interface propsBotones{
@@ -65,7 +66,7 @@ function Revisiones() {
 		<div>
 			<h1>Revisiones de DNI {client_nif}</h1>
 
-			<TablaRevisiones revisiones={revisiones} revisionSeleccionada={revisionSeleccionada} setRevisionSeleccionada={setRevisionSeleccionada} />
+			<TablaRevisiones revisiones={revisiones} revisionSeleccionada={revisionSeleccionada} setRevisionSeleccionada={setRevisionSeleccionada} cliente_nif={client_nif} />
 			
 			<BotonesRevisiones revisiones={revisiones} setRevisiones={setRevisiones} revisionSeleccionada={revisionSeleccionada} setRevisionSeleccionada={setRevisionSeleccionada} client_nif={client_nif}/>
 		</div>

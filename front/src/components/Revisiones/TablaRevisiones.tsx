@@ -1,7 +1,7 @@
 import React from 'react'
 import { propsTabla } from './Revisiones'
 
-function TablaRevisiones({revisiones,revisionSeleccionada, setRevisionSeleccionada}:propsTabla) {
+function TablaRevisiones({revisiones,revisionSeleccionada, setRevisionSeleccionada, cliente_nif}:propsTabla) {
 	return (
 		<div>
 		<div className="containerTabla">
@@ -9,6 +9,7 @@ function TablaRevisiones({revisiones,revisionSeleccionada, setRevisionSelecciona
 			<thead>
 			  <tr>
 				<th>ID</th>
+				<th>NIF</th>
 				<th>CONSULTA</th>
 				<th>OD_ESFERA</th>
 				<th>OD_CILINDRO</th>
@@ -29,6 +30,7 @@ function TablaRevisiones({revisiones,revisionSeleccionada, setRevisionSelecciona
 					style={revisionSeleccionada.ID === r.ID ? {backgroundColor: "#9bded3"} : {}}
 				>
 				  <td>{r.ID}</td>
+				  <td>{cliente_nif}</td>
 				  <td>{r.CONSULTA.getMonth().toString() + "/" + r.CONSULTA.getDay + "/" + r.CONSULTA.getFullYear}</td>
 				  <td>{r.OD_ESFERA}</td>
 				  <td>{r.OD_CILINDRO}</td>

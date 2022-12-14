@@ -1,6 +1,7 @@
 import React from 'react'
+import { propsTabla } from './Revisiones'
 
-function TablaRevisiones({ revisiones }) {
+function TablaRevisiones({revisiones,revisionSeleccionada, setRevisionSeleccionada}:propsTabla) {
 	return (
 		<div>
 		<div className="containerTabla">
@@ -23,7 +24,9 @@ function TablaRevisiones({ revisiones }) {
 			  {revisiones.map((r, key) => (
 				<tr
 				  key={key}
-				  onClick={() => {}}
+				  onClick={() => {
+					setRevisionSeleccionada({...r})}}
+					style={revisionSeleccionada.ID === r.ID ? {backgroundColor: "#9bded3"} : {}}
 				>
 				  <td>{r.ID}</td>
 				  <td>{r.CONSULTA}</td>

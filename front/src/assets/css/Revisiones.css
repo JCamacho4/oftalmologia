@@ -4,16 +4,36 @@ h1{
   }
   
   .containerTabla {
-    height: 300px;
     width: 80%;
-    overflow-y: auto;
-    width: 100%;
-    text-align: left;
+    /*left: 12.5%;*/
+    left: 2%;
+    overflow: auto;
+    top: 15%;
+    height: 226.8px;
+    position: absolute;
+  }
+
+  .containerBotonesRevisiones {
+    position: absolute;
+    right: 1.8%;
+    top: 20%;
+    width:15%;
+    height: 450px;
+  }
+
+  .containerLabelsRevisiones {
+    background-color: white;
+    position: absolute;
+    border-radius: 15px;
+    left: 2%;
+    bottom: 7%;
+    width:70%;
+    height: 205px;;
   }
   
   .tablaRevisiones {
     width:80%;
-    margin:0 auto;  
+    margin:0 auto; 
   }
   
   .formulario {
@@ -46,6 +66,7 @@ h1{
   }
   
   .tablaRevisiones tr:hover {
+    cursor: pointer;
     background-color: #ddd;
   }
   
@@ -55,7 +76,7 @@ h1{
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: center;
-    background-color: lightblue;
+    background-color: rgb(153, 197, 255);
     color: black;
   }
   
@@ -73,4 +94,52 @@ h1{
   
   .containerRevisiones{
     display: flex;
+  }
+
+  .buttonRev {
+    background-color: rgb(74, 152, 254);
+    border-radius: 8px;
+    border-style: none;
+    box-shadow: rgba(129, 192, 250, 0.15) 0 4px 9px;
+    box-sizing: border-box;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    display: inline-block;
+    font-family: Inter,-apple-system,system-ui,"Segoe UI",Helvetica,Arial,sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: normal;
+    line-height: 1.5;
+    margin-bottom: 30px;
+    outline: none;
+    overflow: hidden;
+    padding: 13px 20px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    transform: translate3d(0, 0, 0);
+    transition: all .3s;
+    user-select: none;
+    touch-action: manipulation;
+    vertical-align: top;
+    width: 100%;
+  }
+  
+  .buttonRev:hover {
+    background-color: rgb(135, 187, 255);
+    color:black;
+    opacity: 1;
+    transform: translateY(0);
+    transition-duration: .35s;
+    box-shadow: rgba(79, 79, 79, 0.2) 0 6px 12px;
+  }
+  
+  .buttonRev:active {
+    transform: translateY(2px);
+    transition-duration: .35s;
+  }
+  
+  .buttonRev:hover img {
+    transition: .35s;
+    filter: invert(1);
   }

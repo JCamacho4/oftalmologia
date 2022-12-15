@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useEffect, useRef } from "react";
 import { Client, propsBotones } from "./Clientes";
+import swal from 'sweetalert';
+import ojo from "../../assets/images/ojo2.png";
 
 export function BotonesClientes({
   clientes,
@@ -40,14 +42,22 @@ export function BotonesClientes({
     if(client.NIF.length > 0 ){
       window.location.href = client.NIF;
     } else {
-      alert("Selecciona un cliente cazurro");
+      swal({
+        icon: "error",
+        title: "No se puede realizar la acción",
+        text: "Seleccione un cliente para abrir sus revisiones."
+      })
     }
   };
 
   const insertCliente = (cliente: Client) => {
-    if (cliente.NIF.length > 0) {
+    if (cliente.NIF.length > 0 && cliente.NOMBRE.length > 0 && cliente.APELLIDOS.length > 0) {
       if(clientes.find((c) => c.NIF === cliente.NIF) !== undefined){
-        alert("Ya hay un cliente con el mismo DNI");
+        swal({
+          icon: "error",
+          title: "No se pudo realizar la inserción",
+          text: "Ya existe un cliente con el mismo NIF"
+        })
         return;
       }
       axios.post("http://localhost:3001/insertCliente", {
@@ -59,7 +69,11 @@ export function BotonesClientes({
       setClientes(clientes.concat(cliente).sort((a,b) => sort(a,b)));
       setClienteSeleccionado({ NIF: "", NOMBRE: "", APELLIDOS: "", EDAD: 0 });
     } else {
-      alert("Selecciona un cliente pedazo de marica");
+      swal({
+        icon: "info",
+        title: "No hay suficientes datos",
+        text: "Introduzca todos los datos para insertar un nuevo cliente"
+      })
     }
   };
 
@@ -72,12 +86,32 @@ export function BotonesClientes({
       setClienteSeleccionado({ NIF: "", NOMBRE: "", APELLIDOS: "", EDAD: 0 });
 
     } else {
-      alert("Selecciona un cliente pedazo de gay");
+      swal({
+        icon: "info",
+        title: "Ningún cliente seleccionado",
+        text: "Seleccione un cliente para poder eliminarlo"
+      })
     }
   };
 
   const modificarCliente = (cliente:Client, oldClient:Client) => {
-    if(cliente.NIF.length > 0){
+    if (oldClient.NIF.length < 1) {
+      swal({
+        icon: "info",
+        title: "Ningún cliente seleccionado",
+        text: "Seleccione previamente un cliente sobre el que modificar sus datos"
+      })
+      return;
+    }
+    if (clientes.find((c) => c.NIF === cliente.NIF && c !== oldClient) !== undefined) {
+      swal({
+        icon: "error",
+        title: "No se pudo realizar la modificación",
+        text: "Existe un cliente con el mismo NIF que se quiso modificar"
+      })
+      return;
+    }
+    if(cliente.NIF.length > 0 && cliente.NOMBRE.length > 0 && cliente.APELLIDOS.length > 0){
       axios.post("http://localhost:3001/updateCliente", {
         NIF: cliente.NIF,
         NOMBRE: cliente.NOMBRE,
@@ -98,17 +132,25 @@ export function BotonesClientes({
           return c;
         })
       );
+      /*swal({
+        icon: "success",
+        title: "Modificación realizada con éxito"
+      })*/
 			setClientes(clientes.filter(c => c.NIF !== oldClient.NIF).concat(cliente).sort((a,b) => sort(a,b)));
       setClienteSeleccionado({ NIF: "", NOMBRE: "", APELLIDOS: "", EDAD: 0 });
     } else {
-      alert("Selecciona un cliente pedazo de estúpido");
+        swal({
+          icon: "info",
+          title: "No hay suficientes datos",
+          text: "Introduzca todos los datos para llevar a cabo la modificación del cliente"
+        })
     }
   };
 
   return (
     <>
       <div className="containerLabels">
-        <form>
+        <form style={{position: "absolute",left: "20px"}}>
         <label>NIF</label>
           <input
             type="text"
@@ -156,12 +198,14 @@ export function BotonesClientes({
           </select>
         </form>
       </div>
-      <div className="containerBotones">
-          <button
-          className="buttonClientes"
-          onClick={() => abrirRevisiones(clienteSeleccionado)}
-          >Mostrar Revisiones</button>
 
+      <div className="containerMostrarRevisiones">
+          <button
+          className="buttonRevisiones"
+          onClick={() => abrirRevisiones(clienteSeleccionado)}
+          ><img src={ojo} className="iconoBoton" alt=""/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mostrar Revisiones</button>
+      </div>
+      <div className="containerBotones">
           <button 
           className="buttonClientes"
           onClick={() => {
@@ -180,7 +224,7 @@ export function BotonesClientes({
           >Insertar Cliente</button>
           <button 
           className="buttonClientes"
-          onClick={() => deleteCliente(clienteSeleccionado)}
+          onClick={() => {deleteCliente(clienteSeleccionado)}}
           >Eliminar Cliente</button>
           <button
           className="buttonClientes"

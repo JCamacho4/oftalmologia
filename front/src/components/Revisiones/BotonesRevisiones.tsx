@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useRef } from "react";
-import { propsBotones, Revision } from './Revisiones'
+import { propsBotones, Revision } from './Revisiones';
+import swal from 'sweetalert';
 
 export function BotonesRevisiones({
 	revisiones,
@@ -33,6 +34,7 @@ export function BotonesRevisiones({
 	}, [revisionSeleccionada]);
 
 	const insertRevision = (revision: Revision, nif:string) => {
+		if (!Number.isNaN(revision.CONSULTA.getDate())) {
 			axios.post("http://localhost:3001/insertCita", {
 			  NIF: nif,
 			  ID: revision.ID,
@@ -49,8 +51,13 @@ export function BotonesRevisiones({
 				setRevisionSeleccionada({ID: "",CONSULTA: Date.now(),OD_ESFERA: 0,OD_CILINDRO: 0,OD_ADICION: 0,OD_AGUDEZA: 0,OI_ESFERA: 0,
 						OI_CILINDRO: 0,OI_ADICION: 0,OI_AGUDEZA: 0,cLIENTNIF:""});
 			});
-
-			
+		} else {
+			swal({
+				icon: "info",
+        		title: "No hay suficientes datos",
+        		text: "Compruebe que ha insertado una fecha de consulta correcta"
+			})
+		}
 	};
 
 	const deleteRevision = (revision: Revision) => {
@@ -62,12 +69,24 @@ export function BotonesRevisiones({
 					OI_CILINDRO: 0,OI_ADICION: 0,OI_AGUDEZA: 0,cLIENTNIF:""});
 			});
 		  } else {
-			alert("Selecciona un cliente pedazo de gay");
+			swal({
+				icon: "info",
+				title: "No se puede realizar la acción",
+				text: "Seleccione una revisión para poder eliminarla"
+			})
 		  }
 	};
 
 	const modificarRevision = (revision: Revision, nif) => {
 		if(revision.ID.toString().length > 0){
+			if (Number.isNaN(revision.CONSULTA.getDate())) {
+				swal({
+					icon: "info",
+        			title: "No hay suficientes datos",
+        			text: "Compruebe que ha insertado una fecha de consulta correcta"
+				})
+				return;
+			}
 			axios.post("http://localhost:3001/updateCita", {
 				NIF: nif,
 				ID: revision.ID,
@@ -85,18 +104,23 @@ export function BotonesRevisiones({
 					OI_CILINDRO: 0,OI_ADICION: 0,OI_AGUDEZA: 0,cLIENTNIF:""});
 			});
 		  } else {
-			alert("Selecciona un cliente pedazo de estúpido");
+			swal({
+				icon: "info",
+				title: "No se puede realizar la acción",
+				text: "Seleccione una revisión para poder modificarla"
+			})
 		  }
 	};
 
 	return (
 		<>
-		<div className="containerLabels">
-		  <form>
-		  <label>OD_ESFERA</label>
+		<div className="containerLabelsRevisiones">
+		  <form style={{position: "absolute",left: "20px"}}>
+		  <label>OD_ESFERA&nbsp;&nbsp;&nbsp;&nbsp;</label>
 			<input
 			  type="text"
 				ref={odesfera}
+				style={{width:"100px"}}
 			></input>
   
 			<br />
@@ -105,28 +129,33 @@ export function BotonesRevisiones({
 			<input
 			  type="text"
 				ref={odcilindro}
+				style={{width:"100px"}}
 			></input>
   
 			<br />
   
-			<label>OD_ADICION</label>
+			<label>OD_ADICION&nbsp;&nbsp;</label>
 			<input
 			  type="text"
 				ref={odadicion}
+				style={{width:"100px"}}
 			></input>
   
 			<br />
   
-			<label>OD_AGUDEZA</label>
+			<label>OD_AGUDEZA&nbsp;</label>
 			<input
 			  type="text"
 				ref={odagudeza}
+				style={{width:"100px"}}
 			></input>
-
-			<label>OI_ESFERA</label>
+			</form>
+			<form style={{position: "absolute",left: "300px"}}>
+			<label>OI_ESFERA&nbsp;&nbsp;&nbsp;&nbsp;</label>
 			<input
 			  type="text"
 				ref={oiesfera}
+				style={{width:"100px"}}
 			></input>
   
 			<br />
@@ -135,37 +164,41 @@ export function BotonesRevisiones({
 			<input
 			  type="text"
 				ref={oicilindro}
+				style={{width:"100px"}}
 			></input>
   
 			<br />
   
-			<label>OI_ADICION</label>
+			<label>OI_ADICION&nbsp;&nbsp;</label>
 			<input
 			  type="text"
 				ref={oiadicion}
+				style={{width:"100px"}}
 			></input>
   
 			<br />
   
-			<label>OI_AGUDEZA</label>
+			<label>OI_AGUDEZA&nbsp;</label>
 			<input
 			  type="text"
 				ref={oiagudeza}
+				style={{width:"100px"}}
 			></input>
 
 			<br />
-
-			<label>CONSULTA</label>
+			</form>
+			<form style={{position: "absolute",left: "580px", top: "10px"}}>
+			<label>CONSULTA&nbsp;&nbsp;&nbsp;&nbsp;</label>
 			<input 
 				type="date"
 				ref={consulta}
+				style={{width:"100px"}}
 			></input>
-
 		  </form>
 		</div>
-		<div className="containerBotones">
+		<div className="containerBotonesRevisiones">
 			<button 
-			className="buttonClientes"
+			className="buttonRev"
 			onClick={() => {
 				let r : Revision = {...revisionSeleccionada};
 			  if(consulta.current) r.CONSULTA = new Date(consulta.current?.value);
@@ -179,13 +212,13 @@ export function BotonesRevisiones({
 			  r.OI_AGUDEZA = Number(oiagudeza.current?.value);
 				insertRevision(r, client_nif)
 			}}
-			>Insertar Revision</button>
+			>Añadir Revision</button>
 			<button 
-			className="buttonClientes"
+			className="buttonRev"
 			onClick={() => deleteRevision(revisionSeleccionada)}
 			>Eliminar Revision</button>
 			<button
-			className="buttonClientes"
+			className="buttonRev"
 			onClick={() => {
 				let r : Revision = {...revisionSeleccionada};
 			  if(consulta.current) r.CONSULTA = new Date(consulta.current?.value);
@@ -201,13 +234,18 @@ export function BotonesRevisiones({
 			}}
 			>Modificar Revision</button>
 			<button
-			className="buttonClientes"
+			className="buttonRev"
 			onClick={() => {
 				setRevisionSeleccionada({ID: "",CONSULTA: Date.now(),OD_ESFERA: 0,OD_CILINDRO: 0,OD_ADICION: 0,OD_AGUDEZA: 0,OI_ESFERA: 0,
-						OI_CILINDRO: 0,OI_ADICION: 0,OI_AGUDEZA: 0,cLIENTNIF:""});
+						OI_CILINDRO: 0,OI_ADICION: 0,OI_AGUDEZA: 0,cLIENTNIF: ""});
 			}}
 			>Limpiar</button>
-  
+			<button
+			className="buttonRev"
+			onClick={() => {
+				window.location.href = "/";
+			}}
+			>Salir</button>
 		</div>
 	  </>
 	)

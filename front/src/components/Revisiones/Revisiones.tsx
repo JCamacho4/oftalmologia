@@ -4,6 +4,7 @@ import BotonesRevisiones from './BotonesRevisiones'
 import TablaRevisiones from './TablaRevisiones'
 import { useParams } from "react-router-dom";
 import "../../assets/css/Revisiones.css"
+import { Client } from '../Clientes/Clientes';
 
 export interface Revision{
 	ID: string;
@@ -38,6 +39,7 @@ function Revisiones() {
 	let params = useParams();
 	let client_nif = params.cliente;
 
+	const [cliente, setCliente] = useState<Client>();
 	const [revisiones, setRevisiones] = useState<Revision[]>([])
 	const [revisionSeleccionada, setRevisionSeleccionada] = useState<Revision>({
 		ID: "",
@@ -54,16 +56,23 @@ function Revisiones() {
 	  });
 
 	  useEffect(() => {
-		axios.post("http://localhost:3001/lRevisiones", {
-			NIF: client_nif
-		}).then((revisiones) => {
-		  setRevisiones(revisiones.data);
-		});
+			axios.post("http://localhost:3001/lRevisiones", {
+				NIF: client_nif
+			}).then((revisiones) => {
+		  	setRevisiones(revisiones.data);
+			});
+
+			axios.post("http://localhost:3001/clienteNIF", {
+				nif: client_nif
+			}).then((c) => setCliente(c.data));
 	  }, [revisionSeleccionada]);
 
 	return (
 		<div>
-			<h1>Revisiones de DNI {client_nif}</h1>
+			{cliente === undefined ?
+					<h1 className='parpadea'>Cargando revisiones del paciente con NIF {client_nif}</h1>
+					:
+					<h1>Revisiones de {cliente?.NIF + ";" + cliente?.NOMBRE + ";" + cliente?.APELLIDOS + ";" + cliente?.EDAD}</h1>}
 
 			<TablaRevisiones revisiones={revisiones} revisionSeleccionada={revisionSeleccionada} setRevisionSeleccionada={setRevisionSeleccionada} cliente_nif={client_nif} />
 			

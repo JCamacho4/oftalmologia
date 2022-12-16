@@ -36,6 +36,12 @@ app.post("/lRevisiones", async (req, res) => {
 	res.send(r);
 });
 
+app.post("/clienteNIF",async (req, res) => {
+	let nif = req.body.nif;
+	let c  = await clientRepository.findOneBy({NIF: nif});
+	res.send(c);
+});
+
 
 /* 	========================================================
 	Inserciones

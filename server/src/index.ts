@@ -82,6 +82,9 @@ app.post("/deleteCliente", async (req, res) => {
 	let NIF = req.body.NIF;
 	let c = await clientRepository.findOneBy({NIF: NIF});
 
+	let revisiones = await revisionRepository.findBy({CLIENT: c});
+	await revisionRepository.remove(revisiones);
+
 	await clientRepository.remove(c);
 });
 
@@ -103,12 +106,17 @@ app.post("/updateCliente", async(req, res) => {
 	client.APELLIDOS = req.body.APELLIDOS;
 	client.EDAD = Number(req.body.EDAD);
 
+	await clientRepository.save(client).catch(error => res.send(error));
+
 	if(oldnif !== client.NIF){
 		let c = await clientRepository.findOneBy({NIF: oldnif});
+
+		let revisiones = await revisionRepository.findBy({CLIENT: c});
+		revisiones.forEach(r => r.CLIENT = client);
+		await revisionRepository.save(revisiones);
+
 		await clientRepository.remove(c);
 	}
-
-	await clientRepository.save(client).catch(error => res.send(error));
 });
 
 app.post("/updateCita", async(req, res) => {

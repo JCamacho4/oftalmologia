@@ -3,9 +3,8 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
-  background-image: url("https://img.freepik.com/vector-gratis/fondo-vector-degradado-azul-claro-invierno_53876-126054.jpg?w=2000");
-  /*background-image: url("https://img.freepik.com/vector-gratis/optometria-conjunto-plano-iconos-opticos-pipeta-oculista-analisis-ocular-oftalmologia-tratamiento_1284-41455.jpg?auto=format&h=200");*/
-	background-color: #d5f5f2;
+		background-color: #cfe6fb;
+    background-image: linear-gradient(45deg, #cfe6fb 0%, #e7e7ef 100%);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
